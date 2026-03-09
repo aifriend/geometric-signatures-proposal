@@ -1,0 +1,23 @@
+cff-version: 1.2.0
+message: "If you use this software, please cite it as below."
+title: "Geometric Signatures of Computational Motifs in Neural Population Dynamics"
+type: software
+version: 0.1.0
+date-released: "2026-03-04"
+license: MIT
+repository-code: "https://github.com/aifriend/geometric-signatures-proposal"
+authors:
+  - family-names: Lopez
+    given-names: Jose
+    orcid: "https://orcid.org/0009-0004-0952-4908"
+keywords:
+  - computational neuroscience
+  - neural population dynamics
+  - recurrent neural networks
+  - motif ablation
+  - manifold geometry
+  - representational similarity
+abstract: >-
+  Research codebase for discovering and validating geometric signatures
+  of reusable computational motifs in neural population dynamics through
+  constrained RNNs and biological dataset validation.

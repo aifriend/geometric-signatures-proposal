@@ -1,0 +1,630 @@
+{
+  "ablate_attractor_dynamics": {
+    "cka.mean_self_cka": {
+      "n_permutations": 1000,
+      "observed_statistic": 0.0,
+      "p_value": 1.0
+    },
+    "cka.split_half_cka": {
+      "n_permutations": 1000,
+      "observed_statistic": -0.013896562717854978,
+      "p_value": 0.474
+    },
+    "cka.temporal_cka": {
+      "n_permutations": 1000,
+      "observed_statistic": 0.029841044545173556,
+      "p_value": 0.735
+    },
+    "persistent_homology.H0_betti": {
+      "n_permutations": 1000,
+      "observed_statistic": 3.8999999999999773,
+      "p_value": 0.428
+    },
+    "persistent_homology.H0_entropy": {
+      "n_permutations": 1000,
+      "observed_statistic": 0.13659069674896518,
+      "p_value": 0.15
+    },
+    "persistent_homology.H0_longest_bar": {
+      "n_permutations": 1000,
+      "observed_statistic": -4.438543272018432,
+      "p_value": 0.399
+    },
+    "persistent_homology.H0_mean_persistence": {
+      "n_permutations": 1000,
+      "observed_statistic": 0.43198729803154867,
+      "p_value": 0.041
+    },
+    "persistent_homology.H0_total_persistence": {
+      "n_permutations": 1000,
+      "observed_statistic": 206.6353279883515,
+      "p_value": 0.047
+    },
+    "persistent_homology.H1_betti": {
+      "n_permutations": 1000,
+      "observed_statistic": -0.6000000000000085,
+      "p_value": 0.907
+    },
+    "persistent_homology.H1_entropy": {
+      "n_permutations": 1000,
+      "observed_statistic": -0.030432564246985816,
+      "p_value": 0.642
+    },
+    "persistent_homology.H1_longest_bar": {
+      "n_permutations": 1000,
+      "observed_statistic": 1.4969596385955812,
+      "p_value": 0.054
+    },
+    "persistent_homology.H1_mean_persistence": {
+      "n_permutations": 1000,
+      "observed_statistic": 0.14361628487299616,
+      "p_value": 0.047
+    },
+    "persistent_homology.H1_total_persistence": {
+      "n_permutations": 1000,
+      "observed_statistic": 13.523364062421024,
+      "p_value": 0.065
+    },
+    "persistent_homology.H2_betti": {
+      "n_permutations": 1000,
+      "observed_statistic": 0.7999999999999998,
+      "p_value": 0.581
+    },
+    "persistent_homology.H2_entropy": {
+      "n_permutations": 1000,
+      "observed_statistic": 0.2222023855098343,
+      "p_value": 0.365
+    },
+    "persistent_homology.H2_longest_bar": {
+      "n_permutations": 1000,
+      "observed_statistic": -0.0075716018676758035,
+      "p_value": 0.938
+    },
+    "persistent_homology.H2_mean_persistence": {
+      "n_permutations": 1000,
+      "observed_statistic": 0.004576704402334597,
+      "p_value": 0.889
+    },
+    "persistent_homology.H2_total_persistence": {
+      "n_permutations": 1000,
+      "observed_statistic": 0.07487253844738007,
+      "p_value": 0.861
+    },
+    "population_geometry.condition_separability": {
+      "n_permutations": 1000,
+      "observed_statistic": 0.013549231330348528,
+      "p_value": 0.069
+    },
+    "population_geometry.effective_dimensionality": {
+      "n_permutations": 1000,
+      "observed_statistic": 0.7999999999999998,
+      "p_value": 0.184
+    },
+    "population_geometry.max_trajectory_speed": {
+      "n_permutations": 1000,
+      "observed_statistic": 11.604214096069338,
+      "p_value": 0.031
+    },
+    "population_geometry.mean_trajectory_length": {
+      "n_permutations": 1000,
+      "observed_statistic": -32.191444396972656,
+      "p_value": 0.697
+    },
+    "population_geometry.mean_trajectory_speed": {
+      "n_permutations": 1000,
+      "observed_statistic": -0.32516608238220224,
+      "p_value": 0.712
+    },
+    "population_geometry.participation_ratio": {
+      "n_permutations": 1000,
+      "observed_statistic": 0.5571051499536419,
+      "p_value": 0.038
+    },
+    "population_geometry.std_trajectory_speed": {
+      "n_permutations": 1000,
+      "observed_statistic": -0.1826131582260131,
+      "p_value": 0.759
+    },
+    "population_geometry.top_3_variance_explained": {
+      "n_permutations": 1000,
+      "observed_statistic": -0.034010165929794334,
+      "p_value": 0.218
+    },
+    "rsa.max_dissimilarity": {
+      "n_permutations": 1000,
+      "observed_statistic": -0.2225361317396164,
+      "p_value": 0.382
+    },
+    "rsa.mean_dissimilarity": {
+      "n_permutations": 1000,
+      "observed_statistic": -0.08702258638416732,
+      "p_value": 0.466
+    },
+    "rsa.min_dissimilarity": {
+      "n_permutations": 1000,
+      "observed_statistic": 0.07210094798356295,
+      "p_value": 0.026
+    },
+    "rsa.n_conditions": {
+      "n_permutations": 1000,
+      "observed_statistic": 0.0,
+      "p_value": 1.0
+    },
+    "rsa.std_dissimilarity": {
+      "n_permutations": 1000,
+      "observed_statistic": -0.15335234851119245,
+      "p_value": 0.21
+    }
+  },
+  "ablate_expansion_recoding": {
+    "cka.mean_self_cka": {
+      "n_permutations": 1000,
+      "observed_statistic": NaN,
+      "p_value": 0.000999000999000999
+    },
+    "cka.split_half_cka": {
+      "n_permutations": 1000,
+      "observed_statistic": NaN,
+      "p_value": 0.000999000999000999
+    },
+    "cka.temporal_cka": {
+      "n_permutations": 1000,
+      "observed_statistic": NaN,
+      "p_value": 0.000999000999000999
+    },
+    "persistent_homology.H0_betti": {
+      "n_permutations": 1000,
+      "observed_statistic": 0.6999999999999886,
+      "p_value": 0.945
+    },
+    "persistent_homology.H0_entropy": {
+      "n_permutations": 1000,
+      "observed_statistic": 0.11379162859352121,
+      "p_value": 0.188
+    },
+    "persistent_homology.H0_longest_bar": {
+      "n_permutations": 1000,
+      "observed_statistic": -10.94591020175389,
+      "p_value": 0.214
+    },
+    "persistent_homology.H0_mean_persistence": {
+      "n_permutations": 1000,
+      "observed_statistic": 0.013131755330973771,
+      "p_value": 0.916
+    },
+    "persistent_homology.H0_total_persistence": {
+      "n_permutations": 1000,
+      "observed_statistic": 6.372169047760849,
+      "p_value": 0.902
+    },
+    "persistent_homology.H1_betti": {
+      "n_permutations": 1000,
+      "observed_statistic": 12.528571428571425,
+      "p_value": 0.012
+    },
+    "persistent_homology.H1_entropy": {
+      "n_permutations": 1000,
+      "observed_statistic": 0.1827699189648806,
+      "p_value": 0.008
+    },
+    "persistent_homology.H1_longest_bar": {
+      "n_permutations": 1000,
+      "observed_statistic": -1.1548148155212399,
+      "p_value": 0.203
+    },
+    "persistent_homology.H1_mean_persistence": {
+      "n_permutations": 1000,
+      "observed_statistic": 0.013725802794285258,
+      "p_value": 0.804
+    },
+    "persistent_homology.H1_total_persistence": {
+      "n_permutations": 1000,
+      "observed_statistic": 8.398734725346522,
+      "p_value": 0.138
+    },
+    "persistent_homology.H2_betti": {
+      "n_permutations": 1000,
+      "observed_statistic": 1.8428571428571434,
+      "p_value": 0.123
+    },
+    "persistent_homology.H2_entropy": {
+      "n_permutations": 1000,
+      "observed_statistic": 0.15558526434392395,
+      "p_value": 0.441
+    },
+    "persistent_homology.H2_longest_bar": {
+      "n_permutations": 1000,
+      "observed_statistic": 0.13493595123291013,
+      "p_value": 0.139
+    },
+    "persistent_homology.H2_mean_persistence": {
+      "n_permutations": 1000,
+      "observed_statistic": 0.021225310106101514,
+      "p_value": 0.614
+    },
+    "persistent_homology.H2_total_persistence": {
+      "n_permutations": 1000,
+      "observed_statistic": 0.5513235943658013,
+      "p_value": 0.144
+    },
+    "population_geometry.condition_separability": {
+      "n_permutations": 1000,
+      "observed_statistic": -0.0015231225041648644,
+      "p_value": 0.84
+    },
+    "population_geometry.effective_dimensionality": {
+      "n_permutations": 1000,
+      "observed_statistic": -3.257142857142858,
+      "p_value": 0.001
+    },
+    "population_geometry.max_trajectory_speed": {
+      "n_permutations": 1000,
+      "observed_statistic": 7.522454289027625,
+      "p_value": 0.452
+    },
+    "population_geometry.mean_trajectory_length": {
+      "n_permutations": 1000,
+      "observed_statistic": 84.11783774239677,
+      "p_value": 0.002
+    },
+    "population_geometry.mean_trajectory_speed": {
+      "n_permutations": 1000,
+      "observed_statistic": 0.8496751410620551,
+      "p_value": 0.000999000999000999
+    },
+    "population_geometry.participation_ratio": {
+      "n_permutations": 1000,
+      "observed_statistic": -0.3150849064888579,
+      "p_value": 0.344
+    },
+    "population_geometry.std_trajectory_speed": {
+      "n_permutations": 1000,
+      "observed_statistic": 1.2684300967625208,
+      "p_value": 0.032
+    },
+    "population_geometry.top_3_variance_explained": {
+      "n_permutations": 1000,
+      "observed_statistic": 0.07252185600144523,
+      "p_value": 0.012
+    },
+    "rsa.max_dissimilarity": {
+      "n_permutations": 1000,
+      "observed_statistic": NaN,
+      "p_value": 0.000999000999000999
+    },
+    "rsa.mean_dissimilarity": {
+      "n_permutations": 1000,
+      "observed_statistic": NaN,
+      "p_value": 0.000999000999000999
+    },
+    "rsa.min_dissimilarity": {
+      "n_permutations": 1000,
+      "observed_statistic": NaN,
+      "p_value": 0.000999000999000999
+    },
+    "rsa.n_conditions": {
+      "n_permutations": 1000,
+      "observed_statistic": 0.0,
+      "p_value": 1.0
+    },
+    "rsa.std_dissimilarity": {
+      "n_permutations": 1000,
+      "observed_statistic": NaN,
+      "p_value": 0.000999000999000999
+    }
+  },
+  "ablate_normalization_gain_modulation": {
+    "cka.mean_self_cka": {
+      "n_permutations": 1000,
+      "observed_statistic": NaN,
+      "p_value": 0.000999000999000999
+    },
+    "cka.split_half_cka": {
+      "n_permutations": 1000,
+      "observed_statistic": NaN,
+      "p_value": 0.000999000999000999
+    },
+    "cka.temporal_cka": {
+      "n_permutations": 1000,
+      "observed_statistic": NaN,
+      "p_value": 0.000999000999000999
+    },
+    "persistent_homology.H0_betti": {
+      "n_permutations": 1000,
+      "observed_statistic": -6.100000000000023,
+      "p_value": 0.452
+    },
+    "persistent_homology.H0_entropy": {
+      "n_permutations": 1000,
+      "observed_statistic": 0.5473982504118862,
+      "p_value": 0.002
+    },
+    "persistent_homology.H0_longest_bar": {
+      "n_permutations": 1000,
+      "observed_statistic": -6.037993478775025,
+      "p_value": 0.345
+    },
+    "persistent_homology.H0_mean_persistence": {
+      "n_permutations": 1000,
+      "observed_statistic": 1.0827378787624449,
+      "p_value": 0.000999000999000999
+    },
+    "persistent_homology.H0_total_persistence": {
+      "n_permutations": 1000,
+      "observed_statistic": 491.478763991213,
+      "p_value": 0.000999000999000999
+    },
+    "persistent_homology.H1_betti": {
+      "n_permutations": 1000,
+      "observed_statistic": 16.099999999999994,
+      "p_value": 0.096
+    },
+    "persistent_homology.H1_entropy": {
+      "n_permutations": 1000,
+      "observed_statistic": 0.6614286273170458,
+      "p_value": 0.007
+    },
+    "persistent_homology.H1_longest_bar": {
+      "n_permutations": 1000,
+      "observed_statistic": 1.6884037494659427,
+      "p_value": 0.113
+    },
+    "persistent_homology.H1_mean_persistence": {
+      "n_permutations": 1000,
+      "observed_statistic": 0.3296245100312797,
+      "p_value": 0.001
+    },
+    "persistent_homology.H1_total_persistence": {
+      "n_permutations": 1000,
+      "observed_statistic": 37.3247284591198,
+      "p_value": 0.001
+    },
+    "persistent_homology.H2_betti": {
+      "n_permutations": 1000,
+      "observed_statistic": 2.5,
+      "p_value": 0.285
+    },
+    "persistent_homology.H2_entropy": {
+      "n_permutations": 1000,
+      "observed_statistic": 0.6640796802976598,
+      "p_value": 0.107
+    },
+    "persistent_homology.H2_longest_bar": {
+      "n_permutations": 1000,
+      "observed_statistic": 0.3282928019762039,
+      "p_value": 0.006
+    },
+    "persistent_homology.H2_mean_persistence": {
+      "n_permutations": 1000,
+      "observed_statistic": 0.13074178729222452,
+      "p_value": 0.001
+    },
+    "persistent_homology.H2_total_persistence": {
+      "n_permutations": 1000,
+      "observed_statistic": 1.0228342443704606,
+      "p_value": 0.018
+    },
+    "population_geometry.condition_separability": {
+      "n_permutations": 1000,
+      "observed_statistic": 0.04165162694509246,
+      "p_value": 0.000999000999000999
+    },
+    "population_geometry.effective_dimensionality": {
+      "n_permutations": 1000,
+      "observed_statistic": 2.1999999999999997,
+      "p_value": 0.043
+    },
+    "population_geometry.max_trajectory_speed": {
+      "n_permutations": 1000,
+      "observed_statistic": -28.963860321044926,
+      "p_value": 0.028
+    },
+    "population_geometry.mean_trajectory_length": {
+      "n_permutations": 1000,
+      "observed_statistic": -301.97292022705074,
+      "p_value": 0.001
+    },
+    "population_geometry.mean_trajectory_speed": {
+      "n_permutations": 1000,
+      "observed_statistic": -3.050231552124024,
+      "p_value": 0.003
+    },
+    "population_geometry.participation_ratio": {
+      "n_permutations": 1000,
+      "observed_statistic": 1.3276137767386542,
+      "p_value": 0.001
+    },
+    "population_geometry.std_trajectory_speed": {
+      "n_permutations": 1000,
+      "observed_statistic": -5.248200416564941,
+      "p_value": 0.000999000999000999
+    },
+    "population_geometry.top_3_variance_explained": {
+      "n_permutations": 1000,
+      "observed_statistic": -0.09811077713966376,
+      "p_value": 0.003
+    },
+    "rsa.max_dissimilarity": {
+      "n_permutations": 1000,
+      "observed_statistic": NaN,
+      "p_value": 0.000999000999000999
+    },
+    "rsa.mean_dissimilarity": {
+      "n_permutations": 1000,
+      "observed_statistic": NaN,
+      "p_value": 0.000999000999000999
+    },
+    "rsa.min_dissimilarity": {
+      "n_permutations": 1000,
+      "observed_statistic": NaN,
+      "p_value": 0.000999000999000999
+    },
+    "rsa.n_conditions": {
+      "n_permutations": 1000,
+      "observed_statistic": 0.0,
+      "p_value": 1.0
+    },
+    "rsa.std_dissimilarity": {
+      "n_permutations": 1000,
+      "observed_statistic": NaN,
+      "p_value": 0.000999000999000999
+    }
+  },
+  "ablate_selective_gating": {
+    "cka.mean_self_cka": {
+      "n_permutations": 1000,
+      "observed_statistic": 0.0,
+      "p_value": 1.0
+    },
+    "cka.split_half_cka": {
+      "n_permutations": 1000,
+      "observed_statistic": -0.033244821615517145,
+      "p_value": 0.014
+    },
+    "cka.temporal_cka": {
+      "n_permutations": 1000,
+      "observed_statistic": 0.05459249019622803,
+      "p_value": 0.458
+    },
+    "persistent_homology.H0_betti": {
+      "n_permutations": 1000,
+      "observed_statistic": -2.8000000000000114,
+      "p_value": 0.59
+    },
+    "persistent_homology.H0_entropy": {
+      "n_permutations": 1000,
+      "observed_statistic": 0.12039423699193907,
+      "p_value": 0.034
+    },
+    "persistent_homology.H0_longest_bar": {
+      "n_permutations": 1000,
+      "observed_statistic": -5.526296281814574,
+      "p_value": 0.407
+    },
+    "persistent_homology.H0_mean_persistence": {
+      "n_permutations": 1000,
+      "observed_statistic": 0.17854488509041744,
+      "p_value": 0.348
+    },
+    "persistent_homology.H0_total_persistence": {
+      "n_permutations": 1000,
+      "observed_statistic": 75.26872751652058,
+      "p_value": 0.402
+    },
+    "persistent_homology.H1_betti": {
+      "n_permutations": 1000,
+      "observed_statistic": -4.6000000000000085,
+      "p_value": 0.484
+    },
+    "persistent_homology.H1_entropy": {
+      "n_permutations": 1000,
+      "observed_statistic": -0.08795812710394513,
+      "p_value": 0.236
+    },
+    "persistent_homology.H1_longest_bar": {
+      "n_permutations": 1000,
+      "observed_statistic": 1.5190505504608156,
+      "p_value": 0.031
+    },
+    "persistent_homology.H1_mean_persistence": {
+      "n_permutations": 1000,
+      "observed_statistic": 0.12042296947592357,
+      "p_value": 0.074
+    },
+    "persistent_homology.H1_total_persistence": {
+      "n_permutations": 1000,
+      "observed_statistic": 9.744250817783175,
+      "p_value": 0.163
+    },
+    "persistent_homology.H2_betti": {
+      "n_permutations": 1000,
+      "observed_statistic": -3.3,
+      "p_value": 0.127
+    },
+    "persistent_homology.H2_entropy": {
+      "n_permutations": 1000,
+      "observed_statistic": -0.35189299465432344,
+      "p_value": 0.107
+    },
+    "persistent_homology.H2_longest_bar": {
+      "n_permutations": 1000,
+      "observed_statistic": -0.045577955245971746,
+      "p_value": 0.729
+    },
+    "persistent_homology.H2_mean_persistence": {
+      "n_permutations": 1000,
+      "observed_statistic": 0.007007310015040569,
+      "p_value": 0.832
+    },
+    "persistent_homology.H2_total_persistence": {
+      "n_permutations": 1000,
+      "observed_statistic": -0.5713440775871277,
+      "p_value": 0.308
+    },
+    "population_geometry.condition_separability": {
+      "n_permutations": 1000,
+      "observed_statistic": -0.0023072018201069425,
+      "p_value": 0.865
+    },
+    "population_geometry.effective_dimensionality": {
+      "n_permutations": 1000,
+      "observed_statistic": 0.5,
+      "p_value": 0.509
+    },
+    "population_geometry.max_trajectory_speed": {
+      "n_permutations": 1000,
+      "observed_statistic": -15.70179920196533,
+      "p_value": 0.389
+    },
+    "population_geometry.mean_trajectory_length": {
+      "n_permutations": 1000,
+      "observed_statistic": -56.66349029541013,
+      "p_value": 0.168
+    },
+    "population_geometry.mean_trajectory_speed": {
+      "n_permutations": 1000,
+      "observed_statistic": -0.5723586082458496,
+      "p_value": 0.159
+    },
+    "population_geometry.participation_ratio": {
+      "n_permutations": 1000,
+      "observed_statistic": 0.39860875777377025,
+      "p_value": 0.199
+    },
+    "population_geometry.std_trajectory_speed": {
+      "n_permutations": 1000,
+      "observed_statistic": -1.563923490047455,
+      "p_value": 0.091
+    },
+    "population_geometry.top_3_variance_explained": {
+      "n_permutations": 1000,
+      "observed_statistic": -0.018324863910675115,
+      "p_value": 0.489
+    },
+    "rsa.max_dissimilarity": {
+      "n_permutations": 1000,
+      "observed_statistic": -0.34366475641727445,
+      "p_value": 0.197
+    },
+    "rsa.mean_dissimilarity": {
+      "n_permutations": 1000,
+      "observed_statistic": -0.1656916908919811,
+      "p_value": 0.193
+    },
+    "rsa.min_dissimilarity": {
+      "n_permutations": 1000,
+      "observed_statistic": 0.05574021302163601,
+      "p_value": 0.059
+    },
+    "rsa.n_conditions": {
+      "n_permutations": 1000,
+      "observed_statistic": 0.0,
+      "p_value": 1.0
+    },
+    "rsa.std_dissimilarity": {
+      "n_permutations": 1000,
+      "observed_statistic": -0.21980242346169993,
+      "p_value": 0.114
+    }
+  }
+}

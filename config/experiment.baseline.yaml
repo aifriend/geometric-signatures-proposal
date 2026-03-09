@@ -1,0 +1,23 @@
+experiment:
+  name: baseline_four_motif_complete
+  seed: 42
+  run_group: phase1
+
+task_battery:
+  tasks:
+    - context_dependent_integration
+    - evidence_accumulation
+    - working_memory
+    - perceptual_discrimination
+
+motifs:
+  normalization_gain_modulation: true
+  attractor_dynamics: true
+  selective_gating: true
+  expansion_recoding: true
+
+training:
+  optimizer: adam
+  lr: 0.0005
+  batch_size: 64
+  epochs: 50

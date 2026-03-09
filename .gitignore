@@ -1,0 +1,38 @@
+# Python
+__pycache__/
+*.py[cod]
+*.egg-info/
+*.egg
+dist/
+build/
+
+# Virtual environment
+.venv/
+
+# IDE / editor
+.vscode/
+.idea/
+.DS_Store
+
+# pytest
+.pytest_cache/
+
+# mypy
+.mypy_cache/
+
+# uv
+.python-version
+
+# Environment
+.env
+.env.*
+
+# Research outputs (generated at runtime)
+results/
+outputs/
+runs/
+
+# Large files (generated at runtime)
+*.pt
+*.ckpt
+.claude/
