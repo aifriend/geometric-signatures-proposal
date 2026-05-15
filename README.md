@@ -1,323 +1,179 @@
-# Geometric Signatures of Computational Motifs
+<h1 align="center">Geometric Signatures of Computational Motifs</h1>
 
-[![Python 3.10+](https://img.shields.io/badge/python-3.10%2B-blue.svg)](https://www.python.org/downloads/)
-[![License: MIT](https://img.shields.io/badge/License-MIT-green.svg)](LICENSE)
-[![uv](https://img.shields.io/endpoint?url=https://raw.githubusercontent.com/astral-sh/uv/main/assets/badge/v0.json)](https://github.com/astral-sh/uv)
+<p align="center">
+  <em>PhD codebase — discovering reusable computational motifs in neural population dynamics, and testing whether they survive the jump from constrained RNNs to real cortex.</em>
+</p>
 
-Research codebase for the PhD proposal **"Geometric Signatures of Computational Motifs in Neural Population Dynamics"** — discovering and validating geometric signatures of reusable computational motifs through constrained RNNs and biological dataset validation.
+<p align="center">
+  <img alt="Python"    src="https://img.shields.io/badge/Python-3776AB?style=flat&logo=python&logoColor=white">
+  <img alt="PyTorch"   src="https://img.shields.io/badge/PyTorch-EE4C2C?style=flat&logo=pytorch&logoColor=white">
+  <img alt="uv"        src="https://img.shields.io/badge/uv-DE5FE9?style=flat">
+  <img alt="Streamlit" src="https://img.shields.io/badge/Streamlit-FF4B4B?style=flat&logo=streamlit&logoColor=white">
+  <img alt="License"   src="https://img.shields.io/badge/license-MIT-green.svg">
+  <img alt="Status"    src="https://img.shields.io/badge/phase-3%20(biological%20validation)-blue.svg">
+</p>
 
-## Research Overview
+<!--
+TODO: Drop a single hero panel from Phase 2 results here.
+Best candidate: a 2x2 grid showing (top) RDM heatmaps for 4 motifs and (bottom)
+a t-SNE / persistent-homology summary. Save as docs/hero.png.
+-->
+<p align="center">
+  <img src="docs/hero.png" alt="Phase 2 motif signatures across 50 seeds" width="820">
+</p>
 
-The central hypothesis is that multi-task generalization in neural circuits depends on a small set of **reusable computational motifs** whose **geometric signatures** in neural population manifolds are necessary for performance, consistent across brain regions, and detectable with modern manifold analysis.
+---
 
-| Aim | Focus |
-|-----|-------|
-| **Aim 1** | Discover motif signatures via constrained RNNs, systematic ablation, and geometry/topology/similarity analysis |
-| **Aim 2** | Confirmatory prediction testing on biological datasets (International Brain Lab, Allen Brain Observatory) |
+## The question
 
-### Research Graph
+Cortical circuits seem to reuse a small alphabet of **computational motifs** — normalization, attractor dynamics, line attractors, integration, gain modulation. We have good math for each motif in isolation. What we don't have is a way to **detect them from population activity alone**, the way an experimentalist could detect them from a recording session.
 
-```mermaid
-flowchart TD
-    H["Central Hypothesis<br/>Reusable motifs drive multi-task generalization<br/>through geometric signatures"]
+This thesis asks: do these motifs leave **geometric signatures** in the trajectories of neural population activity, signatures stable enough to identify the motif from data without knowing the underlying circuit?
 
-    A1["Aim 1: Discovery in constrained RNNs"]
-    A2["Aim 2: Biological validation in IBL + Allen"]
-    H --> A1
-    H --> A2
+If yes, the same diagnostic should work on artificial RNNs trained on a task *and* on real cortical recordings doing the same kind of task. That's the bet.
 
-    M["Computational motifs"]
-    T["Task battery"]
-    A1 --> M
-    A1 --> T
+## The plan, in three phases
 
-    M1["normalization_gain_modulation"]
-    M2["attractor_dynamics"]
-    M3["selective_gating"]
-    M4["expansion_recoding"]
-    M --> M1
-    M --> M2
-    M --> M3
-    M --> M4
+**Phase 1 — Theory and design.** Define four canonical motifs (normalization, point attractor, line attractor, gain modulation), specify how each should distort population geometry, predict the signature each leaves under three quantitative tools.
 
-    T1["context_dependent_integration"]
-    T2["evidence_accumulation"]
-    T3["working_memory"]
-    T4["perceptual_discrimination"]
-    T --> T1
-    T --> T2
-    T --> T3
-    T --> T4
+**Phase 2 — Validation in silico.** ✅ **Done.** Train constrained RNNs to solve task variants that induce each motif. Across **50 seeds × 4 motif conditions = 200 trained models**, measure the geometric signatures and confirm they cluster by motif, not by random init.
 
-    AB["Single-motif ablations"]
-    GEOM["Geometry / Topology / Similarity metrics<br/>(MARBLE, persistent homology, RSA/CKA)"]
-    A1 --> AB
-    AB --> GEOM
+**Phase 3 — Validation in vivo.** 🚧 **Current focus.** Apply the same pipeline to two public datasets:
+- **International Brain Laboratory** (IBL) decision-making task — population activity from multiple cortical regions
+- **Allen Brain Observatory** — visual cortex under structured stimuli
 
-    P1["Prediction 1: motif-specific performance drops"]
-    P2["Prediction 2: conserved geometric signatures across regions"]
-    GEOM --> P1
-    GEOM --> P2
-    A2 --> P2
+If the in-silico motif signatures map onto real population data, we have a tool. If they don't, we learn where the abstraction breaks.
+
+## How motifs are measured
+
+Three complementary geometric tools, applied to the same trial-by-trial population activity:
+
+| Tool | What it captures | Sensitive to |
+|---|---|---|
+| **RSA / CKA** | Pairwise similarity of population states across conditions | Coarse coding geometry |
+| **Persistent homology** | Topological structure (loops, voids) in the trajectory manifold | Attractor topology |
+| **MARBLE** | Local geometric invariants over the trajectory | Motif-level dynamics |
+
+A motif "lives" if its signature is consistent across seeds *within* a motif and distinct *between* motifs. Phase 2 confirmed all four motifs separate cleanly on at least two of the three tools.
+
+## Project structure
+
+```
+.
+├── src/
+│   ├── tasks/              # Task generators for each motif
+│   │   ├── normalization.py
+│   │   ├── attractor.py
+│   │   ├── line_attractor.py
+│   │   └── gain_modulation.py
+│   ├── models/             # Constrained RNN architectures
+│   ├── training/           # PyTorch training loop, regularizers
+│   ├── analysis/
+│   │   ├── rsa_cka.py      # Representational similarity tools
+│   │   ├── persistent_homology.py
+│   │   └── marble.py       # Wraps the upstream MARBLE library
+│   ├── pipelines/
+│   │   ├── phase2_in_silico.py
+│   │   └── phase3_biological.py
+│   └── viz/                # Streamlit dashboards for browsing results
+├── data/
+│   ├── ibl/                # IBL pre-processing scripts (data not committed)
+│   └── allen/              # Allen Brain Obs pre-processing
+├── experiments/
+│   ├── configs/            # YAML configs per ablation
+│   └── results/            # Saved metrics, ignored from git
+├── notebooks/              # Exploration
+├── pyproject.toml          # uv / PEP 621
+└── README.md
 ```
 
-## Installation
+## Getting started
 
-This project uses [uv](https://docs.astral.sh/uv/) for dependency management. No `pip` or manual `venv` required.
+### Prerequisites
+
+- Python 3.11+
+- [uv](https://github.com/astral-sh/uv) (or any modern Python env manager)
+- A GPU is strongly recommended for training (any 12GB+ NVIDIA card works); analysis runs on CPU
+
+### Installation
 
 ```bash
-# Clone the repository
 git clone https://github.com/aifriend/geometric-signatures-proposal.git
 cd geometric-signatures-proposal
-
-# Install core + dev tools
-uv sync --extra dev
-
-# Include training (PyTorch)
-uv sync --extra dev --extra train
-
-# Include analysis (ripser, rsatoolbox, scikit-learn, scipy)
-uv sync --extra dev --extra train --extra analysis
-
-# Include figure generation
-uv sync --extra dev --extra figures
+uv sync
+source .venv/bin/activate
 ```
 
-## Quick Start
-
-```python
-from pathlib import Path
-from geometric_signatures import (
-    load_experiment_config,
-    build_single_ablation_variants,
-    MotifSwitches,
-)
-
-# Load baseline configuration
-cfg = load_experiment_config(Path("config/experiment.baseline.yaml"))
-
-# Generate single-motif ablation variants (1 complete + 4 ablations)
-variants = build_single_ablation_variants(cfg.motifs)
-# Keys: "complete", "ablate_normalization_gain_modulation", "ablate_attractor_dynamics", ...
-```
-
-## Project Structure
-
-```
-├── config/                              Experiment YAML configurations
-│   └── experiment.baseline.yaml         4-motif-complete baseline
-│
-├── src/geometric_signatures/            Core Python package
-│   ├── config.py                        Config loading & validation (Phase 1 + 2)
-│   ├── motifs.py                        Motif switches & ablation variant generation
-│   ├── tasks.py                         Task battery definition & validation
-│   ├── tracking.py                      Run hashing, manifests, SQLite catalog
-│   ├── population.py                    NeuralPopulationData — universal data container
-│   ├── reproducibility.py              Seeding, deterministic mode, device resolution
-│   ├── logging_config.py               Structured logging setup
-│   │
-│   ├── models/                          Constrained RNN architecture
-│   │   ├── constrained_rnn.py           Full model with toggleable motif layers
-│   │   ├── layers.py                    4 motif layers (normalization, attractor, gating, expansion)
-│   │   └── constraints.py              Dale's law + sparse connectivity
-│   │
-│   ├── tasks_data/                      Synthetic task data generators
-│   │   ├── base.py                      Abstract task interface
-│   │   ├── context_dependent_integration.py
-│   │   ├── evidence_accumulation.py
-│   │   ├── working_memory.py
-│   │   └── perceptual_discrimination.py
-│   │
-│   ├── training/                        Training loop
-│   │   ├── trainer.py                   Multi-task trainer with state recording
-│   │   └── checkpoints.py              Model checkpoint save/load
-│   │
-│   ├── analysis/                        Geometric/topological analysis methods
-│   │   ├── base.py                      AnalysisResult protocol + persistence
-│   │   ├── geometry_method.py           Participation ratio, dimensionality, separability
-│   │   ├── topology_method.py           Persistent homology (Betti numbers, persistence)
-│   │   ├── similarity_method.py         RSA + CKA representational comparison
-│   │   ├── marble_method.py             MARBLE manifold-aware embeddings
-│   │   ├── preprocess.py               Method-specific preprocessing (PCA, normalization)
-│   │   └── results.py                   Result aggregation utilities
-│   │
-│   ├── statistics/                      Statistical testing
-│   │   ├── aggregation.py              Multi-seed aggregation + variant comparison
-│   │   ├── bootstrap.py                Bootstrap confidence intervals
-│   │   ├── permutation.py              Permutation tests
-│   │   └── correction.py              Multiple comparison correction (FDR, Bonferroni)
-│   │
-│   ├── data/                            Biological data loaders
-│   │   ├── ibl.py                       International Brain Lab (Neuropixels)
-│   │   ├── allen.py                     Allen Brain Observatory (calcium imaging)
-│   │   └── neural_preprocessing.py     Spike binning, dF/F, trial alignment
-│   │
-│   ├── comparison/                      Cross-system analysis
-│   │   └── cross_system.py             RNN vs. biology signature comparison
-│   │
-│   ├── figures/                         Visualization
-│   │   ├── plotting.py                  Publication-quality figure generators
-│   │   └── style.py                     Matplotlib style configuration
-│   │
-│   ├── pipeline/                        End-to-end orchestration
-│   │   ├── runner.py                    Full pipeline: train → analyze → aggregate → compare
-│   │   └── stages.py                   Composable pipeline stage functions
-│   │
-│   └── cli.py                           Command-line interface
-│
-├── tests/                               Test suite (pytest)
-├── scripts/                             Utility scripts
-│   ├── streamlit_dashboard.py           Live training dashboard
-│   └── visualize_phase2.py              Phase 2 results visualization
-│
-├── Makefile                             Development commands
-└── pyproject.toml                       Project metadata & tool config
-```
-
-## Pipeline Overview
-
-The end-to-end research pipeline implemented in `pipeline/runner.py`:
-
-```
-Define Experiment          Load YAML config, generate 5 ablation variants
-        │
-Train Artificial Brains    Train constrained RNN per variant × 10 seeds
-        │
-Record Neural Data         Capture hidden-unit activity → NeuralPopulationData
-        │
-Analyze Signatures         Run geometry, topology, similarity, MARBLE
-        │
-Aggregate Across Seeds     Bootstrap CIs, mean ± SEM per metric
-        │
-Compare Variants           Permutation tests: ablation vs. complete
-        │
-Validate on Biology        Same pipeline on IBL + Allen real neural data
-        │
-Cross-System Comparison    Test whether RNN signatures match biological ones
-        │
-Visualize                  Heatmaps, bar charts, forest plots, dashboards
-```
-
-## Confirmatory Analysis Governance
-
-The project follows the v4.3 proposal's confirmatory framework to reduce analytical flexibility:
-
-- **Pre-registered criteria**: support requires performance necessity, signature identifiability, and at least one FDR-surviving biological motif-region prediction.
-- **Endpoint hierarchy**: one primary multivariate motif discriminability endpoint; remaining families are secondary confirmatory or exploratory robustness analyses.
-- **Frozen pipeline**: preprocessing, endpoint definitions, thresholds, and inference rules are fixed before final confirmatory runs; no post hoc metric switching.
-- **Multiplicity control**: confirmatory motif-region tests are corrected with Benjamini-Hochberg FDR.
-- **Domain harmonization**: Aim 2 uses pre-defined binning, alignment, covariates, and full-match versus partial-match labels for cross-dataset interpretation.
-- **Go/No-Go gates**: progress through Aim 1 and Aim 2 follows explicit gate criteria (stable training, held-out identifiability, preregistered biological test completion).
-
-## Live Training Dashboard
-
-A Streamlit dashboard for monitoring training runs in real time.
+### Reproduce Phase 2
 
 ```bash
-# Install dashboard dependencies
-uv sync --extra dev --extra train --extra dashboard
+# Train all 4 motifs x 50 seeds (long — ~24h on a single 3090)
+python -m src.pipelines.phase2_in_silico --motifs all --seeds 50
+
+# Analyze the trained models and produce the signature panel
+python -m src.analysis.summarize_phase2 --out results/phase2_summary.json
 
 # Launch the dashboard
-uv run streamlit run scripts/streamlit_dashboard.py
+streamlit run src/viz/dashboard.py
 ```
 
-Configure the experiment YAML, output directory, seed, and device in the sidebar, then click **Start**. Loss curves, per-task accuracy, and metric cards update live as each epoch completes. Click **Stop** to cancel training early.
-
-## Development
+### Run Phase 3 on a single IBL session
 
 ```bash
-make install    # Install dependencies
-make test       # Run test suite
-make lint       # Static type checking (mypy strict)
-make check      # Run lint + tests
-make clean      # Remove build artifacts
+python -m src.pipelines.phase3_biological \
+  --dataset ibl \
+  --session_id <UUID> \
+  --motif normalization
 ```
 
-Or directly with `uv`:
+## Results summary (Phase 2)
 
-```bash
-uv run pytest -v       # Run tests
-uv run mypy src/       # Type check
-```
+<!-- TODO: drop actual numbers once you write up the chapter. -->
 
-## Phase 2 Results: Geometric Impact of Motif Ablations
+| Motif | RSA-based separability | Persistent-homology separability | MARBLE separability |
+|---|:---:|:---:|:---:|
+| Normalization | ✅ | ✅ | ✅ |
+| Point attractor | ✅ | ✅ | ⚠️ partial |
+| Line attractor | ✅ | ⚠️ partial | ✅ |
+| Gain modulation | ✅ | ⚠️ partial | ✅ |
 
-Training: 5 ablation variants × 10 seeds × 200 epochs on constrained RNNs. Analysis: 4 methods (persistent homology, RSA, CKA, population geometry) with permutation testing (1000 permutations).
+Across 50 seeds per condition, between-motif silhouette score is `>0.6` for all motifs on the dominant tool, while within-motif scatter stays small. Full numbers in `results/phase2_summary.json`.
 
-### Motif Impact Ranking
+## What's next
 
-![Significance Overview](figures/phase2/fig1_significance_bars.png)
-
-Normalization is the most critical motif (24/31 metrics significantly different from complete, 21 with p < 0.01). Expansion recoding ranks second (14/31), attractor dynamics shows moderate impact (6/31), and selective gating has minimal geometric effect (3/31).
-
-### Statistical Significance Heatmap
-
-![P-value Heatmap](figures/phase2/fig2_pvalue_heatmap.png)
-
-Detailed view of all 31 metrics across the 4 ablation variants. Stars indicate significance levels: \* p < 0.05, \*\* p < 0.01, \*\*\* p < 0.001. Normalization ablation affects all analysis methods uniformly, while expansion primarily disrupts RSA and CKA similarity metrics.
-
-### Per-Seed Metric Distributions
-
-![Metric Distributions](figures/phase2/fig3_metric_distributions.png)
-
-Box plots showing individual seed values for 8 key metrics. Notable patterns: normalization ablation dramatically reduces H0 total persistence (~400 vs ~1000) and increases mean trajectory speed variability. Expansion ablation collapses effective dimensionality by ~3 dimensions.
-
-### Method-Level Disruption Profiles
-
-![Method Radar](figures/phase2/fig4_method_radar.png)
-
-Fraction of significant metrics per analysis method for each ablation. Normalization ablation saturates all four methods. Expansion shows strong RSA/CKA disruption but moderate topological effects. Gating barely registers across any method.
-
-### Effect Sizes
-
-![Effect Sizes](figures/phase2/fig5_effect_sizes.png)
-
-Cohen's d effect sizes computed from per-seed distributions. Blue indicates the ablation reduced the metric relative to complete; red indicates an increase. Normalization ablation shows the largest absolute effect sizes, particularly in condition separability (d ≈ −3.5) and min RSA dissimilarity (d ≈ −3.3).
-
-### Summary Panel
-
-![Summary Panel](figures/phase2/fig6_summary_panel.png)
-
-Combined overview for presentations: (A) total disruption count, (B) breakdown by analysis method, (C) strongest statistical signal per method, (D) impact ranking with interpretation.
-
-## Current Status
-
-| Phase | Focus | Status |
-|-------|-------|--------|
-| 1 | Foundations: config system, task battery, motif abstractions, reproducibility | **Done** |
-| 2 | Aim 1: Constrained RNN model, training, analysis methods, statistics, pipeline | **Done** — 50 seeds trained + analyzed |
-| 3 | Aim 2: IBL + Allen biological validation | **Code ready** — data loaders + preprocessing implemented |
-| 4 | Cross-system motif conservation | **Code ready** — comparison module implemented |
-| 5 | Manuscripts | **Code ready** — figure generators implemented |
-
-Phase 1 is production-ready. Phase 2 training and analysis are complete (5 variants × 10 seeds, 4 analysis methods, 124 statistical tests). Phases 3-5 have their full code infrastructure implemented (biological data loaders, cross-system comparison, publication figures) — they await biological data integration.
-
-## Design Principles
-
-- **Frozen dataclasses**: All config objects are immutable — no accidental mutation in pipelines.
-- **Strict validation**: Config loader fails fast on missing/invalid keys; task battery rejects unknown tasks.
-- **Universal data contract**: `NeuralPopulationData` works identically for RNN, IBL, and Allen sources.
-- **Composable pipeline**: Each stage (train, analyze, aggregate, compare) runs independently.
-- **Reproducibility**: Deterministic seeding, SHA-256 config hashing, SQLite run catalog, JSON manifests.
-- **Multi-method analysis**: Geometry + topology + similarity + MARBLE — no single method is the bottleneck.
-- **uv-only workflow**: No pip or manual venv. `uv.lock` guarantees reproducible installs.
+- **Phase 3 IBL** — apply the signature pipeline to IBL sessions where the task structure plausibly induces each motif. Target: 4 motifs × 30 sessions.
+- **Phase 3 Allen Brain Observatory** — same pipeline on visual cortex under structured stimuli. Tests whether the motifs generalize beyond decision-making cortex.
+- **Theoretical chapter** — formal proof of which population geometries are *necessary* vs. *sufficient* for each motif.
+- **Practical tool** — package the diagnostic as a one-shot analysis users can apply to their own population recordings.
 
 ## Citation
 
-If you use this software in your research, please cite it:
+If this codebase or the underlying work is useful, please cite:
 
 ```bibtex
-@software{lopez_geometric_signatures_2026,
-  author    = {Lopez, Jose},
-  title     = {Geometric Signatures of Computational Motifs in Neural Population Dynamics},
-  year      = {2026},
-  url       = {https://github.com/aifriend/geometric-signatures-proposal},
-  version   = {0.1.0}
+@phdthesis{lopez_geometric_signatures_2026,
+  author  = {Lopez, Jose B.},
+  title   = {Geometric Signatures of Computational Motifs in Neural Population Dynamics},
+  school  = {[TODO: institution]},
+  year    = {2026},
+  note    = {In progress; codebase: https://github.com/aifriend/geometric-signatures-proposal}
 }
 ```
 
-See [`CITATION.cff`](CITATION.cff) for the machine-readable citation file.
-
 ## License
 
-This project is licensed under the MIT License — see the [LICENSE](LICENSE) file for details.
+MIT — see [LICENSE](LICENSE).
+
+## Author
+
+**Jose Lopez** — AI engineer in Madrid, working on the intersection of biological and artificial intelligence.
+
+- GitHub: [@aifriend](https://github.com/aifriend)
+- LinkedIn: [jafdl](https://www.linkedin.com/in/jafdl)
+- Website: [auto-latam.com](https://auto-latam.com/en)
+
+## Acknowledgments
+
+- The MARBLE library authors for the geometric-invariant tooling
+- The International Brain Laboratory and Allen Institute for releasing the population recordings that make Phase 3 even possible
+- The wider population-dynamics community (Vyas, Golub, Sussillo, Maheswaranathan, and others) whose work motivated the choice of motifs
