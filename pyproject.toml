@@ -105,8 +105,3 @@ module = [
   "streamlit.*",
 ]
 ignore_missing_imports = true
-
-[dependency-groups]
-dev = [
-    "matplotlib>=3.10.8",
-]
