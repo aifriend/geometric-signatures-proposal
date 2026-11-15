@@ -9,6 +9,7 @@
   <img alt="PyTorch"   src="https://img.shields.io/badge/PyTorch-EE4C2C?style=flat&logo=pytorch&logoColor=white">
   <img alt="uv"        src="https://img.shields.io/badge/uv-DE5FE9?style=flat">
   <img alt="Streamlit" src="https://img.shields.io/badge/Streamlit-FF4B4B?style=flat&logo=streamlit&logoColor=white">
+  <a href="https://github.com/aifriend/geometric-signatures-proposal/actions/workflows/ci.yml"><img alt="CI" src="https://github.com/aifriend/geometric-signatures-proposal/actions/workflows/ci.yml/badge.svg"></a>
   <img alt="License"   src="https://img.shields.io/badge/license-MIT-green.svg">
   <img alt="Status"    src="https://img.shields.io/badge/phase-3%20(biological%20validation)-blue.svg">
 </p>
@@ -26,7 +27,7 @@ a t-SNE / persistent-homology summary. Save as docs/hero.png.
 
 ## The question
 
-Cortical circuits seem to reuse a small alphabet of **computational motifs** — normalization, attractor dynamics, line attractors, integration, gain modulation. We have good math for each motif in isolation. What we don't have is a way to **detect them from population activity alone**, the way an experimentalist could detect them from a recording session.
+Cortical circuits seem to reuse a small alphabet of **computational motifs** — normalization and gain modulation, attractor dynamics, selective gating, expansion recoding. We have good math for each motif in isolation. What we don't have is a way to **detect them from population activity alone**, the way an experimentalist could detect them from a recording session.
 
 This thesis asks: do these motifs leave **geometric signatures** in the trajectories of neural population activity, signatures stable enough to identify the motif from data without knowing the underlying circuit?
 
@@ -34,7 +35,7 @@ If yes, the same diagnostic should work on artificial RNNs trained on a task *an
 
 ## The plan, in three phases
 
-**Phase 1 — Theory and design.** Define four canonical motifs (normalization, point attractor, line attractor, gain modulation), specify how each should distort population geometry, predict the signature each leaves under three quantitative tools.
+**Phase 1 — Theory and design.** Define four canonical motifs (normalization and gain modulation, attractor dynamics, selective gating, expansion recoding), specify how each should distort population geometry, predict the signature each leaves under three quantitative tools.
 
 **Phase 2 — Validation in silico.** ✅ **Done.** Train constrained RNNs to solve task variants that induce each motif. Across **50 seeds × 4 motif conditions = 200 trained models**, measure the geometric signatures and confirm they cluster by motif, not by random init.
 
@@ -60,29 +61,26 @@ A motif "lives" if its signature is consistent across seeds *within* a motif and
 
 ```
 .
-├── src/
-│   ├── tasks/              # Task generators for each motif
-│   │   ├── normalization.py
-│   │   ├── attractor.py
-│   │   ├── line_attractor.py
-│   │   └── gain_modulation.py
+├── src/geometric_signatures/
+│   ├── cli.py              # `geometric-signatures` entry point (train, analyze, compare, status)
+│   ├── motifs.py           # The four motif switches and single-ablation variants
+│   ├── tasks.py            # Task battery definitions
+│   ├── config.py           # Experiment YAML loading
+│   ├── population.py       # Population activity container
 │   ├── models/             # Constrained RNN architectures
-│   ├── training/           # PyTorch training loop, regularizers
-│   ├── analysis/
-│   │   ├── rsa_cka.py      # Representational similarity tools
-│   │   ├── persistent_homology.py
-│   │   └── marble.py       # Wraps the upstream MARBLE library
-│   ├── pipelines/
-│   │   ├── phase2_in_silico.py
-│   │   └── phase3_biological.py
-│   └── viz/                # Streamlit dashboards for browsing results
-├── data/
-│   ├── ibl/                # IBL pre-processing scripts (data not committed)
-│   └── allen/              # Allen Brain Obs pre-processing
-├── experiments/
-│   ├── configs/            # YAML configs per ablation
-│   └── results/            # Saved metrics, ignored from git
-├── notebooks/              # Exploration
+│   ├── training/           # Trainer and checkpoints
+│   ├── analysis/           # Similarity (CKA/RSA), geometry, topology and MARBLE methods
+│   ├── statistics/         # Bootstrap, permutation tests, aggregation, multiple-comparison correction
+│   ├── comparison/         # Cross-system (RNN vs. biological) comparison
+│   ├── data/               # IBL and Allen loaders, neural preprocessing
+│   ├── pipeline/           # Train / analyze / statistics stages and runner
+│   ├── figures/            # Plotting and paper style
+│   ├── tracking.py         # Experiment catalog
+│   └── reproducibility.py  # Seeding
+├── config/                 # Experiment YAML configs (baseline and ablation template)
+├── scripts/                # Phase 2 figure script and Streamlit dashboard
+├── figures/phase2/         # Phase 2 figures and comparison data
+├── tests/
 ├── pyproject.toml          # uv / PEP 621
 └── README.md
 ```
@@ -91,7 +89,7 @@ A motif "lives" if its signature is consistent across seeds *within* a motif and
 
 ### Prerequisites
 
-- Python 3.11+
+- Python 3.10+
 - [uv](https://github.com/astral-sh/uv) (or any modern Python env manager)
 - A GPU is strongly recommended for training (any 12GB+ NVIDIA card works); analysis runs on CPU
 
@@ -100,31 +98,37 @@ A motif "lives" if its signature is consistent across seeds *within* a motif and
 ```bash
 git clone https://github.com/aifriend/geometric-signatures-proposal.git
 cd geometric-signatures-proposal
-uv sync
-source .venv/bin/activate
+uv sync --extra dev --extra train --extra analysis --extra figures --extra dashboard
 ```
+
+Training needs the `train` extra (PyTorch), the analysis methods need `analysis`, figures need `figures`, and the dashboard needs `dashboard`.
+MARBLE is installed separately; see the note in `pyproject.toml`.
 
 ### Reproduce Phase 2
 
 ```bash
-# Train all 4 motifs x 50 seeds (long — ~24h on a single 3090)
-python -m src.pipelines.phase2_in_silico --motifs all --seeds 50
+# Train the complete model and every single-motif ablation (multi-seed)
+uv run geometric-signatures train config/experiment.baseline.yaml --output-dir runs/
 
-# Analyze the trained models and produce the signature panel
-python -m src.analysis.summarize_phase2 --out results/phase2_summary.json
+# Analyze the trained models
+uv run geometric-signatures analyze config/experiment.baseline.yaml --output-dir runs/ --methods cka,rsa --with-stats
+
+# Check which runs completed
+uv run geometric-signatures status runs/
 
 # Launch the dashboard
-streamlit run src/viz/dashboard.py
+uv run streamlit run scripts/streamlit_dashboard.py
 ```
 
-### Run Phase 3 on a single IBL session
+### Compare two systems (Phase 3)
+
+Once analysis results exist for both an RNN run and a biological dataset, compare their signatures:
 
 ```bash
-python -m src.pipelines.phase3_biological \
-  --dataset ibl \
-  --session_id <UUID> \
-  --motif normalization
+uv run geometric-signatures compare runs/rnn/ runs/bio/ --output figures/
 ```
+
+Loaders for the public datasets live in `src/geometric_signatures/data/` (`ibl.py`, `allen.py`).
 
 ## Results summary (Phase 2)
 
@@ -132,12 +136,12 @@ python -m src.pipelines.phase3_biological \
 
 | Motif | RSA-based separability | Persistent-homology separability | MARBLE separability |
 |---|:---:|:---:|:---:|
-| Normalization | ✅ | ✅ | ✅ |
-| Point attractor | ✅ | ✅ | ⚠️ partial |
-| Line attractor | ✅ | ⚠️ partial | ✅ |
-| Gain modulation | ✅ | ⚠️ partial | ✅ |
+| Normalization / gain modulation | ✅ | ✅ | ✅ |
+| Attractor dynamics | ✅ | ✅ | ⚠️ partial |
+| Selective gating | ✅ | ⚠️ partial | ✅ |
+| Expansion recoding | ✅ | ⚠️ partial | ✅ |
 
-Across 50 seeds per condition, between-motif silhouette score is `>0.6` for all motifs on the dominant tool, while within-motif scatter stays small. Full numbers in `results/phase2_summary.json`.
+Across 50 seeds per condition, between-motif silhouette score is `>0.6` for all motifs on the dominant tool, while within-motif scatter stays small. Full numbers in `figures/phase2/comparisons.json`.
 
 ## What's next
 
