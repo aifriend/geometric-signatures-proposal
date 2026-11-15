@@ -521,11 +521,6 @@ train = [
     { name = "torch" },
 ]
 
-[package.dev-dependencies]
-dev = [
-    { name = "matplotlib" },
-]
-
 [package.metadata]
 requires-dist = [
     { name = "matplotlib", marker = "extra == 'figures'", specifier = ">=3.8" },
@@ -544,9 +539,6 @@ requires-dist = [
     { name = "types-pyyaml", marker = "extra == 'dev'", specifier = ">=6.0" },
 ]
 provides-extras = ["dev", "train", "analysis", "figures", "dashboard"]
-
-[package.metadata.requires-dev]
-dev = [{ name = "matplotlib", specifier = ">=3.10.8" }]
 
 [[package]]
 name = "gitdb"
