@@ -335,7 +335,7 @@ def _save_population_data(
 
 def _load_single_population(npz_path: Path) -> NeuralPopulationData:
     """Load a single population data file from a completed run."""
-    data = np.load(str(npz_path), allow_pickle=True)
+    data = np.load(str(npz_path))
     activity = data["activity"]
     trial_labels = tuple(str(s) for s in data["trial_labels"])
     time_axis = data["time_axis"]
