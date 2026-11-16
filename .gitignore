@@ -21,7 +21,6 @@ build/
 .mypy_cache/
 
 # uv
-.python-version
 
 # Environment
 .env

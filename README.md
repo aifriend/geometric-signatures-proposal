@@ -120,6 +120,18 @@ uv run geometric-signatures status runs/
 uv run streamlit run scripts/streamlit_dashboard.py
 ```
 
+### Scripts
+
+Helper scripts for long training runs live in `scripts/`. The Google Cloud ones read their settings from environment variables and have no defaults, so set them before running.
+
+| Script | What it does | Required environment variables |
+|---|---|---|
+| `scripts/backup-runs.sh` | Uploads finished seeds from `runs/phase2` to a Cloud Storage bucket, shows backup status, or restores them. | `GCP_PROJECT`, `GCS_BUCKET`, plus `GCS_LOCATION` only if the bucket must be created |
+| `scripts/clean_training.sh` | Stops leftover training processes and moves incomplete seed folders to the trash. | None |
+| `scripts/gcp-deploy.sh` | Creates, monitors and destroys a Compute Engine virtual machine that trains the ablation. | `GCP_PROJECT`, `GCP_ZONE`, `GCP_VM_NAME` (and `GCS_BUCKET` for `download`) |
+| `scripts/safe-delete.sh` | Moves files to the macOS Trash instead of deleting them, with a restore option. | None |
+| `.python-version` | Pins Python 3.12 for `uv`. | None |
+
 ### Compare two systems (Phase 3)
 
 Once analysis results exist for both an RNN run and a biological dataset, compare their signatures:
